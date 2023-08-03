@@ -1,0 +1,35 @@
+syntax = "proto3";  // 指定proto版本
+
+package greeting;
+
+import "google/protobuf/empty.proto";
+
+option go_package="api/greeting";
+
+// 定义Hello请求结构
+message HelloRequest {
+    string name = 1;
+}
+
+// 定义Hello响应结构
+message HelloResponse {
+    string message = 1;
+}
+
+// 定义Bye响应结构
+message ByeResponse {
+    string message = 1;
+}
+
+// 实时UUID服务
+service RealTimeUUID {
+    // 打招呼
+    rpc SayHello (HelloRequest) returns (HelloResponse);
+
+    // 获取UUID
+    rpc GetUUID(google.protobuf.Empty) returns (string);
+
+    // 结束会话
+    rpc SayBye (google.protobuf.Empty) returns (ByeResponse);
+}
+

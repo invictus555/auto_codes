@@ -1,0 +1,41 @@
+syntax = "proto3";
+package service;
+
+option go_package="api/service";		// 添加生成go文件的路径
+
+import "google/api/annotations.proto";	// 引入annotation用于定义gateway
+
+message GreetingReq {
+	string name = 1;
+}
+
+message GreetingResp {
+	string message = 1;
+}
+
+// 日常问安服务，同时携带http服务
+service GreetingService {
+	// 早安
+	rpc GoodMorning (GreetingReq) returns (GreetingResp) {
+		option (google.api.http) = {
+			post: "/v1/goodmorning"
+			body: "*"
+		};
+	}
+
+	// 午安
+	rpc GoodAfternoon (GreetingReq) returns (GreetingResp) {
+		option (google.api.http) = {
+			post: "/v1/goodafternoon"
+			body: "*"
+		};
+	}
+
+	// 晚安
+	rpc GoodEvening(GreetingReq) returns (GreetingResp) {
+		option (google.api.http) = {
+			post: "v1/goodevening"
+			body: "*"
+		};
+	}
+}
